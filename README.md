@@ -5,6 +5,8 @@ It is developed in Jaroslav Černi Institute, Belgrade, Serbia, by
 Milan Dotlić - leading programmer,
 Milenko Pušić, Goran Jevtić, Milan Dimkić.
 
+You can download source code from folder qGrainsSource or Windows executable from folder winExe.
+
 qGrains is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
