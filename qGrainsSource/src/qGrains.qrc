@@ -1,0 +1,26 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource>
+     <file>../resources/images/colors/black.png</file>
+     <file>../resources/images/colors/blue.png</file>
+     <file>../resources/images/colors/cyan.png</file>
+     <file>../resources/images/colors/gray.png</file>
+     <file>../resources/images/colors/green.png</file>
+     <file>../resources/images/colors/magenta.png</file>
+     <file>../resources/images/colors/red.png</file>
+     <file>../resources/images/colors/yellow.png</file>
+     <file>../resources/images/logoJCI.png</file>
+     <file>../resources/images/neravnomernost.png</file>
+     <file>../resources/images/poroznost.png</file>
+     <file>../resources/images/hazen.png</file>
+     <file>../resources/images/slihter.png</file>
+     <file>../resources/images/tercagi.png</file>
+     <file>../resources/images/bejer.png</file>
+     <file>../resources/images/Zauerbrej.png</file>
+     <file>../resources/images/kriger.png</file>
+     <file>../resources/images/kozeni.png</file>
+     <file>../resources/images/cunker.png</file>
+     <file>../resources/images/zamarin.png</file>
+     <file>../resources/images/usbr.png</file>
+     <file>../resources/images/qGrainsSplash.png</file>
+ </qresource>
+ </RCC>
