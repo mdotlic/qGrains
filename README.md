@@ -18,4 +18,4 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with qGrains. If not, see <http://www.gnu.org/licenses/>.
 
-This code uses qcustomplot library <http://www.qcustomplot.com> which is modified slightly modified here. This code also use nn library <https://github.com/sakov/nn-c/tree/master/nn>. 
+This code uses qcustomplot library <http://www.qcustomplot.com> which is slightly modified here. This code also use nn library <https://github.com/sakov/nn-c/tree/master/nn>. 
