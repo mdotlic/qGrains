@@ -487,7 +487,7 @@ namespace Calculation
                   double up=0.0;
                   if(handler->pointGrainSize(idrill, jsample, 0)>to)
                      up = 0;//if there is no smaller grain size than to
-                  else if(handler->pointGrainSize(idrill, jsample, nPoints-1)<to)
+                  else if(handler->pointGrainSize(idrill, jsample, nPoints-1)<=to)
                      up = 100;//if there is no bigger grain size than to
                   else
                   {

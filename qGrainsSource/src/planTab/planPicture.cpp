@@ -388,7 +388,7 @@ void PlanPicture::calcPicture()
                _handler->sampleVal(i, isample, 0)<=to)
          {
             count++;
-            dn =+ Calculation::calcValue(i, isample,
+            dn = dn + Calculation::calcValue(i, isample,
                   _handler, _handler->planCalcType(), _handler->planFromSize(), 
                   _handler->planToSize(), bdummy).toDouble();
          }

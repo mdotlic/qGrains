@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = qGrains_1.31
+TARGET = qGrains_1.32
 
 CONFIG += qt \
 c++11 
@@ -10,7 +10,7 @@ QT += widgets printsupport
 
 INCLUDEPATH += /home/mdotlic/share/NN/thirdparty/nn/
 
-LIBS += -L"/home/mdotlic/share/NN/thirdparty/nn/" -lnn
+LIBS += -L"/media/Storage/Institut/qGrains/qGrains/qGrainsSource/thirdparty/nn/" -lnn
 
 SOURCES += main.cpp \
            qGrains.cpp \
