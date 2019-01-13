@@ -133,7 +133,7 @@ void CondTable::exportColToCsv()
    {
       for(int j=0;j<cols; j++)
       {       
-         if(j<2 || i==0)
+         if(j<2)
             in<<item(i,j)->text().toStdString()<<", ";         
          else
          {
