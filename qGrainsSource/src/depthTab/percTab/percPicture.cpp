@@ -303,8 +303,6 @@ void PercPicture::setDataForGraph(const int & idrill, const int & id)
                   }
                }
             }
-            if(idrill==50)
-               qDebug()<<" ovo bi bilo "<<up<<" "<<down<<" jer je "<<_handler->pointGrainSize(idrill, j, 0)<<" "<<_sizeHandler->to(id)<<"\n";
             double perc = up-down;
             int place = 
                std::lower_bound(x.begin(), x.end(), perc)-x.begin();
