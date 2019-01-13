@@ -76,7 +76,6 @@ QVariant DHandler::data(const QModelIndex & index, int role) const
 
 bool DHandler::setData (const QModelIndex &index, const QVariant & value, int role)
 {
-   qDebug()<<" usao u set data \n";
    if(role == Qt::CheckStateRole)
    {
       ModelNodeBase * parentNode = indexToPointer(parent(index));
@@ -85,7 +84,6 @@ bool DHandler::setData (const QModelIndex &index, const QVariant & value, int ro
          bool newVal = !parentNode->child(index.row())->properties()[ModelEnums::DProp::DCheck].toBool();
          parentNode->child(index.row())->setProperty(newVal,
                ModelEnums::DProp::DCheck);
-         qDebug()<<" izemitovan je signal \n";
          emit dSelectionChange(index.row());
       }
       return true;
