@@ -57,7 +57,7 @@ About::About(QGrains * qGrains) : QDialog(qGrains)
    
    constructText();
    
-   QLabel * aboutQGrains = new QLabel("About qGrains_1.32");
+   QLabel * aboutQGrains = new QLabel("About qGrains_1.33");
    aboutQGrains->setStyleSheet("font:12px bold;");
    
    QLabel * textQGrainsLabel = new QLabel(_textQGrains);
