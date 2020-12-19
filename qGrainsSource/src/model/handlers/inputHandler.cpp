@@ -562,9 +562,11 @@ void InputHandler::commandDepthAppend(const QModelIndex & index)
 
    depthCheck->setName(" Sample at "+QString::number(depth->properties()[0].toDouble())+" "+QString::number(depth->properties()[1].toDouble()));
    for(size_t i=0;i<ModelEnums::SampleProp::SampleProp_Size; i++)
+   {
       depthCheck->setProperty(0,i);
+   }
 
-   row == -1 ? drillCheck->appendChild (depthCheck) : drillCheck->insertChild(depth, row);
+   row == -1 ? drillCheck->appendChild (depthCheck) : drillCheck->insertChild(depthCheck, row);
 }
 
 void InputHandler::commandCoorAppend(const QModelIndex & index, 
