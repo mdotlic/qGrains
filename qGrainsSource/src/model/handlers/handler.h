@@ -90,6 +90,7 @@ class Handler //: public QAbstractItemModel
       double zunk();
 
       int nPoints(const int & idrill, const int & isample);
+      int sampleColor(const int & idrill, const int & isample);
       double pointGrainSize(const int & idrill, const int & isample, 
             const int & ipoint);
       double pointPercent(const int & idrill, const int & isample, 

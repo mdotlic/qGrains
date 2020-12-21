@@ -373,6 +373,11 @@ int Handler::nPoints(const int & idrill, const int & isample)
    return points->rowCount(); 
 }
 
+int Handler::sampleColor(const int & idrill, const int & isample)
+{
+   return _model->child(ModelEnums::Root::CHECKS)->child(idrill)->child(isample)->properties()[ModelEnums::SampleProp::SampleColor].toInt();
+}
+
 double Handler::pointGrainSize(const int & idrill, const int & isample, 
       const int & ipoint)
 {

@@ -37,6 +37,7 @@
 #include <QLineEdit>
 #include <QDialogButtonBox>
 #include <QDebug>
+#include <QPainterPathStroker>
 #include <cmath>
 
 
@@ -322,6 +323,8 @@ void ProfilePicture::paint(QPainter *painter, QPaintEvent * event)
                _viewHandler->sampleVal(idrill, j, 0));
          double sy1=transformY(_handler->elev(idrill) -
                _viewHandler->sampleVal(idrill, j, 1));
+         pen.setColor(Qt::GlobalColor(_color[_handler->sampleColor(idrill, j)]));
+         painter->setPen(pen);
          painter->drawLine(x-_tickSize, sy0, x+_tickSize, sy0);
          painter->drawLine(x-_tickSize, sy1, x+_tickSize, sy1);
          bool correct = false;
@@ -331,9 +334,6 @@ void ProfilePicture::paint(QPainter *painter, QPaintEvent * event)
          if(!correct)
          {
             pen.setColor(Qt::GlobalColor(Qt::darkGray));
-            painter->setPen(pen);
-         }else{
-            pen.setColor(Qt::GlobalColor(_color[_viewHandler->profileColor(idrill)]));
             painter->setPen(pen);
          }
          drawText(painter, x+_tickSize+3, (sy0+sy1)/2, Qt::AlignVCenter, value);
