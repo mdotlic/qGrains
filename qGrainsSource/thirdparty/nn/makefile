@@ -17,7 +17,7 @@ INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_DATA = ${INSTALL} -m 644
 
-CC = gcc
+CC = /media/Storage/mxe/mxe/usr/bin/i686-w64-mingw32.static-gcc
 CFLAGS = -g -O2 -Wall -pedantic
 CFLAGS_TRIANGLE = -g -O2 -Wall -pedantic -w -ffloat-store
 CFLAGS_VULNERABLE = -ffloat-store
