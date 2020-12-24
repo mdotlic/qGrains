@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = qGrains_1.35
+TARGET = qGrains_1.36
 
 CONFIG += qt \
 c++11 

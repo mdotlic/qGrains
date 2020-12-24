@@ -151,7 +151,7 @@ void MainMenu::loadModel(const QString & fileN, const bool & onlyDrills)
                getline(in, str);
                if(str.find(',') != std::string::npos)
                {//used from version 1.35, older qgra would just ignore this
-                  std::string s= str.substr(str.find(','));
+                  std::string s= str.substr(str.find(',')+1);
                   _qGrains->centralWindow()->handler()->setUsePercElev(std::stoi(s));               
                }
                continue;
