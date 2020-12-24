@@ -25,12 +25,13 @@
 #include <QSplitter>
 class QGrains;
 class Handler;
+class PlotHandler;
 
 class ProfileTab : public QSplitter
 {
    Q_OBJECT
    public:
-      ProfileTab(QGrains *, Handler *);
+      ProfileTab(QGrains *, Handler *, PlotHandler *);
 };
 
 

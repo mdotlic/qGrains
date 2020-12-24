@@ -25,9 +25,11 @@
 
 #include <QDebug>
 
-PlanTab::PlanTab(QGrains * qGrains, Handler * handler)
+PlanTab::PlanTab(QGrains * qGrains, Handler * handler,
+      PlotHandler * plotHandler)
 {
-   PlanLeftWidget * planLeftWidget = new PlanLeftWidget(qGrains, handler);
+   PlanLeftWidget * planLeftWidget = new PlanLeftWidget(qGrains, handler,
+         plotHandler);
    QSizePolicy spLeft(QSizePolicy::Preferred, QSizePolicy::Preferred);
    spLeft.setHorizontalStretch(1);
    planLeftWidget->setSizePolicy(spLeft);

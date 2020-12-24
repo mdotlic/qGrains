@@ -38,9 +38,10 @@ class PlotLeftWidget : public QWidget
 {
    Q_OBJECT
    public:
-      PlotLeftWidget(InputHandler * inputHandler, ModelNodeBase * model);
-      PlotHandler * plotHandler() {return _plotHandler;}
+      PlotLeftWidget(InputHandler * inputHandler, PlotHandler * plotHandler,ModelNodeBase * model);
    private slots:
+      void contextMenuRequest(QPoint pos);
+      void callUsePlotElev();
       void showDepth(const QItemSelection & sel, const QItemSelection & desel);
       void showCoor(const QItemSelection & sel, const QItemSelection & desel);
       void splineSelectedSlot(const int &, const int &);
@@ -48,12 +49,12 @@ class PlotLeftWidget : public QWidget
       void intervalSelect();
    private:
       InputHandler * _inputHandler;
+      PlotHandler * _plotHandler;
       QLabel * _dlabel;
       QLabel * _clabel;
       QTableView * _namesTable;
       QTableView * _depthTable;
       Tables * _coorTable;
-      PlotHandler * _plotHandler;
       DepthHeaderLineColorNames * _dHeaderNames;
       CoorHeaderNames * _cHeaderNames;
       QLineEdit * _fromLineEdit;

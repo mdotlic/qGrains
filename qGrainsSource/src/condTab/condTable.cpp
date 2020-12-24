@@ -34,22 +34,22 @@
 CondTable::CondTable(CondHandler * condHandler, Handler * handler):_condHandler(condHandler), _handler(handler)
 {
    setEditTriggers(QAbstractItemView::NoEditTriggers);
-   this->setColumnCount(14);
+   this->setColumnCount(15);
    QStringList headerLabels;
-   headerLabels<<"Drill"<<"Sample"<<"Unif. coef."<<"Porosity"<<"Hazen"<<"Slichter"<<"Terzaghi"<<"Beyer"<<"Sauerbrei"<<"Kruger"<<"Kozeny"<<"Zunker"<<"Zamarin"<<"USBR";
+   headerLabels<<"Drill"<<"Sample"<<"Elevation"<<"Unif. coef."<<"Porosity"<<"Hazen"<<"Slichter"<<"Terzaghi"<<"Beyer"<<"Sauerbrei"<<"Kruger"<<"Kozeny"<<"Zunker"<<"Zamarin"<<"USBR";
    this->setHorizontalHeaderLabels(headerLabels);
    
-   QTableWidgetItem* headerItem = horizontalHeaderItem(2);
+   QTableWidgetItem* headerItem = horizontalHeaderItem(3);
    headerItem->setToolTip("[-]");
-   headerItem = horizontalHeaderItem(3);
+   headerItem = horizontalHeaderItem(4);
    headerItem->setToolTip("[-]");
-   for(int i=4;i<14;i++)
+   for(int i=5;i<15;i++)
    {
       headerItem = horizontalHeaderItem(i);
       headerItem->setToolTip("[m/s]");
    }
 
-   for(int i=2;i<14;i++)
+   for(int i=3;i<15;i++)
       this->setColumnHidden(i, true);
    
    QHeaderView* header = this->horizontalHeader();
@@ -86,6 +86,8 @@ void CondTable::changeRowSlot(const int & idrill, const int & jsample)
       this->insertRow(rowCount());
       setItem(rowCount()-1, 0, new QTableWidgetItem(_handler->drillName(idrill)));
       setItem(rowCount()-1, 1, new QTableWidgetItem(_handler->sampleName(idrill, jsample)));
+      QString elev = QString::number(_handler->elev(idrill) - _handler->sampleVal(idrill, jsample, 0), 'f', 2)+" - "+QString::number(_handler->elev(idrill) - _handler->sampleVal(idrill, jsample, 1), 'f', 2);
+      setItem(rowCount()-1, 2, new QTableWidgetItem(elev));
       calculate(idrill, jsample, rowCount()-1);
    }
    /*else
@@ -128,7 +130,7 @@ void CondTable::exportColToCsv()
 
    int rows = rowCount();
    int cols = columnCount();
-   in<<"Drill, Sample, Unif. coef., Porosity, Hazen, Slichter, Terzaghi, Beyer, Sauerbrei, Kruger, Kozeny, Zunker, Zamarin, USBR\n";
+   in<<"Drill, Sample, Elevation, Unif. coef., Porosity, Hazen, Slichter, Terzaghi, Beyer, Sauerbrei, Kruger, Kozeny, Zunker, Zamarin, USBR\n";
    for(int i=0; i<rows; i++)
    {
       for(int j=0;j<cols; j++)
@@ -170,7 +172,7 @@ void CondTable::exportValToCsv()
 
    int rows = rowCount();
    int cols = columnCount();
-   in<<"Drill, Sample, Unif. coef., Porosity, Hazen, Slichter, Terzaghi, Beyer, Sauerbrei, Kruger, Kozeny, Zunker, Zamarin, USBR\n";
+   in<<"Drill, Sample, Columns, Unif. coef., Porosity, Hazen, Slichter, Terzaghi, Beyer, Sauerbrei, Kruger, Kozeny, Zunker, Zamarin, USBR\n";
    for(int i=0; i<rows; i++)
    {
       for(int j=0;j<cols; j++)
@@ -189,70 +191,70 @@ void CondTable::calculate(const int & idrill, const int & jsample,
       const int & irow)
 {
    bool correct=false;
-   setItem(irow, 2, new QTableWidgetItem(
-       Calculation::calcValue(idrill, jsample, _handler, 6, -1, -1, correct)));
    setItem(irow, 3, new QTableWidgetItem(
+       Calculation::calcValue(idrill, jsample, _handler, 6, -1, -1, correct)));
+   setItem(irow, 4, new QTableWidgetItem(
        Calculation::calcValue(idrill, jsample, _handler, 7, -1, -1, correct)));
 
    correct = false;
-   setItem(irow, 4, new QTableWidgetItem(
-       Calculation::calcValue(idrill, jsample, _handler, 8, -1, -1, correct)));
-   if(!correct)
-      item(irow,4)->setBackground(Qt::red);
-   
-   correct=false;
    setItem(irow, 5, new QTableWidgetItem(
-       Calculation::calcValue(idrill, jsample, _handler, 9, -1, -1, correct)));
+       Calculation::calcValue(idrill, jsample, _handler, 8, -1, -1, correct)));
    if(!correct)
       item(irow,5)->setBackground(Qt::red);
    
    correct=false;
    setItem(irow, 6, new QTableWidgetItem(
-       Calculation::calcValue(idrill, jsample, _handler, 10, -1, -1, correct)));
+       Calculation::calcValue(idrill, jsample, _handler, 9, -1, -1, correct)));
    if(!correct)
       item(irow,6)->setBackground(Qt::red);
-
+   
    correct=false;
    setItem(irow, 7, new QTableWidgetItem(
-       Calculation::calcValue(idrill, jsample, _handler, 11, -1, -1, correct)));
+       Calculation::calcValue(idrill, jsample, _handler, 10, -1, -1, correct)));
    if(!correct)
       item(irow,7)->setBackground(Qt::red);
 
    correct=false;
    setItem(irow, 8, new QTableWidgetItem(
-       Calculation::calcValue(idrill, jsample, _handler, 12, -1, -1, correct)));
+       Calculation::calcValue(idrill, jsample, _handler, 11, -1, -1, correct)));
    if(!correct)
       item(irow,8)->setBackground(Qt::red);
 
    correct=false;
    setItem(irow, 9, new QTableWidgetItem(
-       Calculation::calcValue(idrill, jsample, _handler, 13, -1, -1, correct)));
+       Calculation::calcValue(idrill, jsample, _handler, 12, -1, -1, correct)));
    if(!correct)
       item(irow,9)->setBackground(Qt::red);
-   
-   correct=false;
-   setItem(irow, 10, new QTableWidgetItem(
-       Calculation::calcValue(idrill, jsample, _handler, 14, -1, -1, correct)));
-   if(!correct)
-      item(irow,10)->setBackground(Qt::red);
 
    correct=false;
+   setItem(irow, 10, new QTableWidgetItem(
+       Calculation::calcValue(idrill, jsample, _handler, 13, -1, -1, correct)));
+   if(!correct)
+      item(irow,10)->setBackground(Qt::red);
+   
+   correct=false;
    setItem(irow, 11, new QTableWidgetItem(
-       Calculation::calcValue(idrill, jsample, _handler, 15, -1, -1, correct)));
+       Calculation::calcValue(idrill, jsample, _handler, 14, -1, -1, correct)));
    if(!correct)
       item(irow,11)->setBackground(Qt::red);
 
    correct=false;
    setItem(irow, 12, new QTableWidgetItem(
-       Calculation::calcValue(idrill, jsample, _handler, 16, -1, -1, correct)));
+       Calculation::calcValue(idrill, jsample, _handler, 15, -1, -1, correct)));
    if(!correct)
       item(irow,12)->setBackground(Qt::red);
 
    correct=false;
    setItem(irow, 13, new QTableWidgetItem(
-       Calculation::calcValue(idrill, jsample, _handler, 17, -1, -1, correct)));
+       Calculation::calcValue(idrill, jsample, _handler, 16, -1, -1, correct)));
    if(!correct)
       item(irow,13)->setBackground(Qt::red);
+
+   correct=false;
+   setItem(irow, 14, new QTableWidgetItem(
+       Calculation::calcValue(idrill, jsample, _handler, 17, -1, -1, correct)));
+   if(!correct)
+      item(irow,14)->setBackground(Qt::red);
 
 }
 

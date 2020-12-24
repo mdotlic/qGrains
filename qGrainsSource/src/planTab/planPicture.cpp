@@ -429,9 +429,11 @@ void PlanPicture::calcSurfPicture()
 
 void PlanPicture::calcSurfThicknessPicture()
 {
+   int calcType = _handler->planCalcType();
    _isolinesWidget->resizeDrillsColorNumber();
    int fsurf = _handler->planSurfaceFrom();
    int tsurf = _handler->planSurfaceTo();
+   bool bdummy = true;
 
    if(tsurf >= _handler->nSurfaces() || fsurf >= _handler->nSurfaces())
       return;
@@ -453,8 +455,39 @@ void PlanPicture::calcSurfThicknessPicture()
       if(fromZ[idrill] != std::numeric_limits<size_t>::max() && 
             toZ[idrill] != std::numeric_limits<size_t>::max())
       {
-         _isolinesWidget->setDrillNumber(idrill, fromZ[idrill] - toZ[idrill]);
-         _isolinesWidget->setDrillColor(idrill, Qt::darkGreen);
+         double value = 0.0;
+         if(calcType == 19)
+         {
+            value = fromZ[idrill] - toZ[idrill];
+            _isolinesWidget->setDrillColor(idrill, Qt::darkGreen);
+         }
+         else
+         {
+            size_t count = 0;
+            double dn = 0;
+            for(int isample=0; isample<_handler->nSample(idrill); isample++)
+            {
+               if(_handler->sampleVal(idrill, isample, 1) >= 
+                     _handler->elev(idrill)-fromZ[idrill] 
+                     && 
+                     _handler->sampleVal(idrill, isample, 0) <=
+                     _handler->elev(idrill)-toZ[idrill])
+               {
+                  count++;
+                  dn = dn + Calculation::calcValue(idrill, isample,
+                        _handler, calcType, _handler->planFromSize(), 
+                        _handler->planToSize(), bdummy).toDouble();
+               }
+            }
+            if(count==1)
+               _isolinesWidget->setDrillColor(idrill, Qt::darkGreen);
+            else if(count>1)
+            {
+               _isolinesWidget->setDrillColor(idrill, Qt::red);
+               value = dn/count;
+            }
+         }
+         _isolinesWidget->setDrillNumber(idrill, value);
       }
    }
    emit _isolinesWidget->somethingChanged();
@@ -845,7 +878,9 @@ void PlanPicture::setFullTitle()
    }else if(_handler->planType()==2)
    {
       _titleName.append(_handler->surfName(_handler->planSurface()));
-   }else if(_handler->planType()==3)
+   }else if(_handler->planType()==3 && 
+         _handler->planSurfaceFrom() <_handler->nSurfaces() && 
+         _handler->planSurfaceTo() < _handler->nSurfaces())
    {
       _titleName.append(" between "+_handler->surfName(_handler->planSurfaceFrom())+" and "+_handler->surfName(_handler->planSurfaceTo()));
    }

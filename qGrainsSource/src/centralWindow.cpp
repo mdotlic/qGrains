@@ -29,6 +29,7 @@
 #include "planTab/planTab.h"
 #include "model/handlers/handler.h"
 #include "model/handlers/inputHandler.h"
+#include "model/handlers/plotHandler.h"
 #include "qGrains.h"
 //#include "depthTab/chooserWidget.h"
 
@@ -43,8 +44,10 @@ CentralWindow::CentralWindow(QGrains * qGrains) : QTabWidget()
    _inputTab = new InputTab(inputHandler, _handler, qGrains);
    _inputTab->setFocusPolicy(Qt::ClickFocus);
    QString inputString = QString("Input");
+
+   PlotHandler * plotHandler = new PlotHandler(qGrains->model());
    
-   PlotTab * plotTab = new PlotTab(inputHandler, qGrains);
+   PlotTab * plotTab = new PlotTab(inputHandler, plotHandler, qGrains);
    plotTab->setFocusPolicy(Qt::ClickFocus);
    QString plotString = QString("Plot");
    
@@ -57,11 +60,11 @@ CentralWindow::CentralWindow(QGrains * qGrains) : QTabWidget()
    condTab->setFocusPolicy(Qt::ClickFocus); 
    QString condString = QString("Conductivity");
 
-   ProfileTab * profileTab = new ProfileTab(qGrains, _handler);
+   ProfileTab * profileTab = new ProfileTab(qGrains, _handler, plotHandler);
    profileTab->setFocusPolicy(Qt::ClickFocus); 
    QString profileString = QString("Profile");
 
-   PlanTab * planTab = new PlanTab(qGrains, _handler);
+   PlanTab * planTab = new PlanTab(qGrains, _handler, plotHandler);
    planTab->setFocusPolicy(Qt::ClickFocus); 
    QString planString = QString("Plan");
 

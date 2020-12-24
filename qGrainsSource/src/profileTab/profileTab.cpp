@@ -26,17 +26,19 @@
 #include "model/handlers/viewHandler.h"
 #include "model/handlers/surfHandler.h"
 #include "model/handlers/profileHandler.h"
+#include "model/handlers/plotHandler.h"
 #include "model/handlers/handler.h"
 #include "model/modelNodeBase.h"
 
-ProfileTab::ProfileTab(QGrains * qGrains, Handler * handler)
+ProfileTab::ProfileTab(QGrains * qGrains, Handler * handler, 
+      PlotHandler * plotHandler)
 {
    
    ViewHandler * viewHandler = new ViewHandler(qGrains->model(), 2);
    SurfHandler * surfHandler = new SurfHandler(qGrains->model());
    ProfileHandler * profileHandler = new ProfileHandler(qGrains->model());
    ProfileLeftWidget * profileLeftWidget = new ProfileLeftWidget(qGrains,
-         handler, viewHandler, surfHandler, profileHandler);
+         handler, viewHandler, surfHandler, profileHandler, plotHandler);
    QSizePolicy spLeft(QSizePolicy::Preferred, QSizePolicy::Preferred);
    spLeft.setHorizontalStretch(1);
    profileLeftWidget->setSizePolicy(spLeft);

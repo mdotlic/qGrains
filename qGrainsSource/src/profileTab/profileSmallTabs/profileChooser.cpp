@@ -23,6 +23,7 @@
 #include "model/handlers/viewHandler.h"
 #include "model/handlers/profileHandler.h"
 #include "model/handlers/handler.h"
+#include "model/handlers/plotHandler.h"
 #include "model/tables/profileTable.h"
 #include "model/modelEnums.h"
 #include "model/modelNodeBase.h"
@@ -32,13 +33,16 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QLabel>
+#include <QMenu>
 #include <QPushButton>
 #include <QTableView>
 #include <QHeaderView>
 #include <QDebug>
 
 ProfileChooser::ProfileChooser(ModelNodeBase * model, Handler * handler,
-      ViewHandler * viewHandler, ProfileHandler * profileHandler):_handler(handler), _viewHandler(viewHandler), _profileHandler(profileHandler)
+      ViewHandler * viewHandler, ProfileHandler * profileHandler, 
+      PlotHandler * plotHandler):_handler(handler), _viewHandler(viewHandler),
+   _profileHandler(profileHandler), _plotHandler(plotHandler)
 {
    QVBoxLayout * layout = new QVBoxLayout;
 
@@ -101,6 +105,28 @@ ProfileChooser::ProfileChooser(ModelNodeBase * model, Handler * handler,
          SLOT(setProfileFrom()));
    connect(_toLineEdit, SIGNAL(editingFinished()), this,
          SLOT(setProfileTo()));*/
+
+   setContextMenuPolicy(Qt::CustomContextMenu);
+   connect(this, SIGNAL(customContextMenuRequested(QPoint)), 
+         this, SLOT(contextMenuRequest(QPoint)));
+}
+
+void ProfileChooser::contextMenuRequest(QPoint pos)
+{
+   QMenu *menu = new QMenu(this);
+   menu->setAttribute(Qt::WA_DeleteOnClose);
+   menu->addAction(" Select all drills from profile "+_handler->profileName(_handler->activeProfile())+" on Plot tab", this, SLOT(selectOnPlotTab()));
+   menu->popup(mapToGlobal(pos));
+}
+
+void ProfileChooser::selectOnPlotTab()
+{
+   _plotHandler->allDrillsChanged(0);//uncheck all
+   int iProfile = _handler->activeProfile();
+   for(size_t idrill=0; idrill<_handler->nProfilePoints(iProfile); idrill++)
+   {
+      _plotHandler->showAllSamples(_handler->profilePoint(iProfile, idrill));
+   }
 }
 
 void ProfileChooser::addDrillPersistent(const int & idrill)

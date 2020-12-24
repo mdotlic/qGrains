@@ -23,6 +23,8 @@
 #include "qGrains.h"
 #include "model/modelNodeBase.h"
 #include "model/handlers/handler.h"
+#include "model/handlers/plotHandler.h"
+#include <QMenu>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -31,7 +33,7 @@
 #include <QDebug>
 #include <math.h>
 
-PlanChooser::PlanChooser(QGrains * qGrains, Handler * handler):_handler(handler)
+PlanChooser::PlanChooser(QGrains * qGrains, Handler * handler, PlotHandler * plotHandler):_handler(handler), _plotHandler(plotHandler)
 {   
    QVBoxLayout * layout = new QVBoxLayout;
    _hByLayout = new QHBoxLayout;
@@ -99,6 +101,61 @@ PlanChooser::PlanChooser(QGrains * qGrains, Handler * handler):_handler(handler)
 
    connect(qGrains->model(), SIGNAL(loadFinished()), this, SLOT(setLoad()));
 
+   setContextMenuPolicy(Qt::CustomContextMenu);
+   connect(this, SIGNAL(customContextMenuRequested(QPoint)), 
+         this, SLOT(contextMenuRequest(QPoint)));
+
+}
+
+void PlanChooser::contextMenuRequest(QPoint pos)
+{
+   QMenu *menu = new QMenu(this);
+   menu->setAttribute(Qt::WA_DeleteOnClose);
+   menu->addAction(" Select on Plot tab", this, SLOT(selectOnPlotTab()));
+   menu->popup(mapToGlobal(pos));
+}
+
+void PlanChooser::selectOnPlotTab()
+{
+   _plotHandler->allDrillsChanged(0);//uncheck all
+   int fsurf = _handler->planSurfaceFrom();
+   int tsurf = _handler->planSurfaceTo();
+
+   if(tsurf >= _handler->nSurfaces() || fsurf >= _handler->nSurfaces())
+      return;
+   
+   std::vector<double> fromZ(_handler->nDrills(), std::numeric_limits<size_t>::max());
+   std::vector<double> toZ(_handler->nDrills(), std::numeric_limits<size_t>::max());
+
+   for(int ipoint = 0; ipoint < _handler->nSurfPoints(fsurf); ipoint++)
+   {
+      int idrill = _handler->surfPointDrill(fsurf, ipoint);
+      fromZ[idrill] = _handler->surfPointZ(fsurf, ipoint);
+   }
+   for(int ipoint = 0; ipoint < _handler->nSurfPoints(tsurf); ipoint++)
+   {
+      int idrill = _handler->surfPointDrill(tsurf, ipoint);
+      toZ[idrill] = _handler->surfPointZ(tsurf, ipoint);
+   }
+
+   for(int idrill=0; idrill<_handler->nDrills(); idrill++)
+   {
+      if(fromZ[idrill] != std::numeric_limits<size_t>::max() && 
+            toZ[idrill] != std::numeric_limits<size_t>::max())
+      {
+         for(int isample=0; isample<_handler->nSample(idrill); isample++)
+         {
+            if(_handler->sampleVal(idrill, isample, 1) >= 
+                  _handler->elev(idrill)-fromZ[idrill] 
+                  && 
+                  _handler->sampleVal(idrill, isample, 0) <=
+                  _handler->elev(idrill)-toZ[idrill])
+            {
+               _plotHandler->showSample(idrill, isample);
+            }
+         }
+      }
+   }
 }
 
 void PlanChooser::indexChangedBySlot(int index)
@@ -158,7 +215,12 @@ void PlanChooser::indexChangedBySlot(int index)
          SLOT(setSurfaceTo(int)));
 
       _handler->setPlanType(index);
-      _valComboBox->setEnabled(false);
+      if(_valComboBox->count() == 19)
+      {
+         _valComboBox->addItem(QString("thickness"));
+         _valComboBox->setCurrentIndex(19);
+      }
+      _valComboBox->setEnabled(true);
       emit changeSurfThicknessPicture();
    }
    else
@@ -184,6 +246,12 @@ void PlanChooser::indexChangedBySlot(int index)
       connect(_toLineEdit, SIGNAL(editingFinished()), this,
          SLOT(setPlanTo()));
       _handler->setPlanType(index);
+
+      if(_valComboBox->count() == 20)
+      {
+         _valComboBox->setCurrentIndex(0);
+         _valComboBox->removeItem(19);
+      }
       emit changePicture();
       _valComboBox->setEnabled(true);
    }
@@ -227,6 +295,8 @@ void PlanChooser::indexChangedValSlot(int index)
    _handler->setPlanCalcType(index);
    if(_handler->planType()==2)
       emit changeSurfPicture();
+   else if(_handler->planType()==3)
+      emit changeSurfThicknessPicture();
    else
       emit changePicture();
 }

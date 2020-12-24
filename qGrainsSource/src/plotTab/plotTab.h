@@ -26,12 +26,13 @@
 class QGrains;
 class LeftWidget;
 class InputHandler;
+class PlotHandler;
 
 class PlotTab : public QSplitter
 {
    Q_OBJECT
    public:
-      PlotTab(InputHandler *, QGrains *);
+      PlotTab(InputHandler *, PlotHandler *, QGrains *);
    /*private:
       LeftWidget * _leftWidget;*/
 };

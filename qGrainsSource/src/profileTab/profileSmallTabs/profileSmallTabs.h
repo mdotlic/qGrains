@@ -28,12 +28,13 @@ class Handler;
 class ViewHandler;
 class SurfHandler;
 class ProfileHandler;
+class PlotHandler;
 
 class ProfileSmallTabs : public QTabWidget
 {
    Q_OBJECT
    public:
-      ProfileSmallTabs(ModelNodeBase *, Handler *, ViewHandler *, SurfHandler *, ProfileHandler *);
+      ProfileSmallTabs(ModelNodeBase *, Handler *, ViewHandler *, SurfHandler *, ProfileHandler *, PlotHandler *);
 };
 
 

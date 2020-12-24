@@ -64,6 +64,7 @@ class InputHandler : public QAbstractItemModel
     int unknownDepthValue();
     
     const QString name(const QModelIndex & index);
+    bool usePlotElev();
    
   signals:
      void addedDrill(const QModelIndex & index);
@@ -81,6 +82,7 @@ class InputHandler : public QAbstractItemModel
      void loadDepthSlot(const double & v0, const double & v1, 
            const QModelIndex &);
      void loadCoorSlot(const double *, const QModelIndex &);
+     void setUsePlotElev(const bool &);
   private:
     void appendToNodeBase(const QModelIndex & parent, ModelNodeBase* p);
     ModelNodeBase * _model;

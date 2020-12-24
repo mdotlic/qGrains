@@ -107,7 +107,7 @@ void SurfaceChooser::exportToCsv()
       for(int j=0;j<_handler->nSurfPoints(i); j++)
       {    
          in.precision(10);
-         in<<_handler->surfPointX(i,j)<<", "<<_handler->surfPointY(i,j)<<", "<<_handler->surfPointZ(i,j)<<"\n";         
+         in<<_handler->surfPointX(i,j)<<", "<<_handler->surfPointY(i,j)<<", "<<_handler->surfPointZ(i,j)<<", "<<_handler->drillName(_handler->surfPointDrill(i, j)).toStdString()<<"\n";         
       }
    }
 

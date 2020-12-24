@@ -60,7 +60,6 @@ int PlotHandler::columnCount(const QModelIndex & parent) const
 
 QVariant PlotHandler::data(const QModelIndex &index, int role) const
 {
-
     if (role == Qt::DisplayRole || role == Qt::EditRole)
     {
        if(index.isValid() && index.row()<rowCount(parent(index)))
@@ -69,7 +68,16 @@ QVariant PlotHandler::data(const QModelIndex &index, int role) const
               _model->child(ModelEnums::Root::DRILLS))
           {   //for depths dont take names
              if(index.column()<2)
-                return QString::number((static_cast<ModelNodeBase*>(index.internalPointer())->data(index.row(), index.column()+1)).toDouble(), 'f', 2);
+             {
+                double depth = (static_cast<ModelNodeBase*>(index.internalPointer())->data(index.row(), index.column()+1)).toDouble();
+                if(_model->child(ModelEnums::Root::CHECKS)->properties()[0].toBool())
+                {
+                   double elev =indexToPointer(parent(index))->properties()[ModelEnums::DrillProp::Elevation].toDouble();
+                   return QString::number(elev-depth, 'f', 2);
+                }
+                else
+                   return QString::number(depth, 'f', 2);
+             }
              else if(index.column()==2)
              {
                 return _model->child(ModelEnums::Root::CHECKS)->child(parent(index).row())->child(index.row())->properties()[ModelEnums::SampleProp::SampleColor];
@@ -351,4 +359,24 @@ void PlotHandler::selectInInterval(const double & from, const double & to)
       emit dataChanged(this->index(0, 0, drillsIndex), 
             this->index(limit, 0, drillsIndex));
    }
+}
+
+void PlotHandler::showAllSamples(const int & idrill)
+{
+   int nSamples = _model->child(ModelEnums::Root::CHECKS)->child(idrill)->rowCount();
+   for(int j=0;j<nSamples;j++)
+   {
+      _model->child(ModelEnums::Root::CHECKS)->child(idrill)->child(j)->setProperty(true, ModelEnums::SampleProp::SampleCheck);
+      emit drawSpline(idrill, j);
+   }
+
+   QModelIndex drillsIndex = createIndex(ModelEnums::Root::DRILLS,0,_model);
+   emit dataChanged(this->index(0, 0, drillsIndex), 
+         this->index(nSamples, 0, drillsIndex));
+}
+
+void PlotHandler::showSample(const int & idrill, const int & jsample)
+{
+   _model->child(ModelEnums::Root::CHECKS)->child(idrill)->child(jsample)->setProperty(true, ModelEnums::SampleProp::SampleCheck);
+   emit drawSpline(idrill, jsample);
 }

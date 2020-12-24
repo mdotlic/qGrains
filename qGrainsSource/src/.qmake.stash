@@ -13,3 +13,35 @@ QMAKE_DEFAULT_LIBDIRS = \
     /usr/lib \
     /lib/x86_64-linux-gnu \
     /lib
+QMAKE_CXX.INCDIRS = \
+    /usr/include/c++/6 \
+    /usr/include/x86_64-linux-gnu/c++/6 \
+    /usr/include/c++/6/backward \
+    /usr/lib/gcc/x86_64-linux-gnu/6/include \
+    /usr/local/include \
+    /usr/lib/gcc/x86_64-linux-gnu/6/include-fixed \
+    /usr/include/x86_64-linux-gnu \
+    /usr/include \
+    /media/Storage/mxe/mxe/usr/lib/gcc/i686-w64-mingw32.static/5.5.0/include/c++ \
+    /media/Storage/mxe/mxe/usr/lib/gcc/i686-w64-mingw32.static/5.5.0/include/c++/i686-w64-mingw32.static \
+    /media/Storage/mxe/mxe/usr/lib/gcc/i686-w64-mingw32.static/5.5.0/include/c++/backward \
+    /media/Storage/mxe/mxe/usr/lib/gcc/i686-w64-mingw32.static/5.5.0/include \
+    /media/Storage/mxe/mxe/usr/lib/gcc/i686-w64-mingw32.static/5.5.0/include-fixed \
+    /media/Storage/mxe/mxe/usr/i686-w64-mingw32.static/include
+QMAKE_CXX.LIBDIRS = \
+    /usr/lib/gcc/x86_64-linux-gnu/6 \
+    /usr/lib/x86_64-linux-gnu \
+    /usr/lib \
+    /lib/x86_64-linux-gnu \
+    /lib \
+    /media/Storage/mxe/mxe/usr/lib/gcc/i686-w64-mingw32.static/5.5.0 \
+    /media/Storage/mxe/mxe/usr/i686-w64-mingw32.static/lib
+QMAKE_CXX.QT_COMPILER_STDCXX = 199711L
+QMAKE_CXX.QMAKE_GCC_MAJOR_VERSION = 5
+QMAKE_CXX.QMAKE_GCC_MINOR_VERSION = 5
+QMAKE_CXX.QMAKE_GCC_PATCH_VERSION = 0
+QMAKE_CXX.COMPILER_MACROS = \
+    QT_COMPILER_STDCXX \
+    QMAKE_GCC_MAJOR_VERSION \
+    QMAKE_GCC_MINOR_VERSION \
+    QMAKE_GCC_PATCH_VERSION

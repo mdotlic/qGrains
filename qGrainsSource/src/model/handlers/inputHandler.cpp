@@ -53,8 +53,9 @@ void InputHandler::initializeModel()
    drills->setProperty(2e-3, ModelEnums::Drills::CUNK);
    _model->appendChild(drills);
 
-   ModelNodeBase * dChecked = new ModelNodeBase(_model);
+   ModelNodeBase * dChecked = new ModelNodeBase(_model, 1);
    dChecked->setName("Checked for d");
+   dChecked->setProperty(false, 0);
    ModelNodeBase * d0 = new ModelNodeBase(dChecked, 
          ModelEnums::DProp::DCheck_Size);
    d0->setName("d10");
@@ -101,12 +102,14 @@ void InputHandler::initializeModel()
    
    _model->appendChild(dChecked);
 
-   ModelNodeBase * percCheck = new ModelNodeBase(_model);
+   ModelNodeBase * percCheck = new ModelNodeBase(_model, 1);
    percCheck->setName("Size checks");
+   percCheck->setProperty(false, 0);
    _model->appendChild(percCheck);
 
-   ModelNodeBase * drillsChecks = new ModelNodeBase(_model);
+   ModelNodeBase * drillsChecks = new ModelNodeBase(_model, 1);
    drillsChecks->setName("Checks");
+   drillsChecks->setProperty(false, 0);
    _model->appendChild(drillsChecks);
 
    ModelNodeBase * conductivity = new ModelNodeBase(_model, ModelEnums::CondProp::Coductivity_Size);
@@ -673,6 +676,11 @@ const QString InputHandler::name(const QModelIndex & index)
    return indexToPointer(index)->name();
 }
 
+bool InputHandler::usePlotElev()
+{
+   return _model->child(ModelEnums::Root::CHECKS)->properties()[0].toBool();
+}
+
 void InputHandler::loadDrillSlot(const std::vector<double> & v, 
       const QString & name)
 {
@@ -802,6 +810,11 @@ void InputHandler::loadCoorSlot(const double * pnt, const QModelIndex & coorInde
       beginInsertRows(index(0,0,depthIndex), irow, irow);
       endInsertRows();
    }
+}
+
+void InputHandler::setUsePlotElev(const bool & check)
+{
+   _model->child(ModelEnums::Root::CHECKS)->setProperty(check, 0);
 }
 
 void InputHandler::appendToNodeBase (const QModelIndex & parent, 

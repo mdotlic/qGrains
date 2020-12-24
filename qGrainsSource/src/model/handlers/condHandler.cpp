@@ -293,10 +293,10 @@ void CondHandler::selectInInterval(const double & from, const double & to)
 
 void CondHandler::setCondCheck(const int & id, const bool & check)
 {
-   _model->child(ModelEnums::Root::CONDUCTIVITY)->setProperty(check, id-2);
+   _model->child(ModelEnums::Root::CONDUCTIVITY)->setProperty(check, id-3);
 }
 
 bool CondHandler::condCheck(const int & id)
 {
-   return _model->child(ModelEnums::Root::CONDUCTIVITY)->properties()[id-2].toBool();
+   return _model->child(ModelEnums::Root::CONDUCTIVITY)->properties()[id-3].toBool();
 }

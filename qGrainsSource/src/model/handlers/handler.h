@@ -76,6 +76,9 @@ class Handler //: public QAbstractItemModel
       void setTerc(const double &);
       void setCunk(const double &);
       void setCond(const int &, const bool &);
+      void setUsePlotElev(const bool &);
+      void setUseDElev(const bool &); 
+      void setUsePercElev(const bool &);
 
       int nDrills();
       int nSample(const int & idrill);
@@ -88,6 +91,8 @@ class Handler //: public QAbstractItemModel
       double visc();
       double terc();
       double zunk();
+      bool usePercElev();
+      bool useDElev();
 
       int nPoints(const int & idrill, const int & isample);
       int sampleColor(const int & idrill, const int & isample);

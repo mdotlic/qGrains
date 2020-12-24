@@ -32,14 +32,18 @@ class QLineEdit;
 class QComboBox;
 class Handler;
 class ProfileHandler;
+class PlotHandler;
 class QLabel;
 
 class ProfileChooser : public QWidget
 {
    Q_OBJECT
    public:
-      ProfileChooser(ModelNodeBase *, Handler *, ViewHandler *, ProfileHandler *);
+      ProfileChooser(ModelNodeBase *, Handler *, ViewHandler *,
+            ProfileHandler *, PlotHandler *);
    private slots:
+      void contextMenuRequest(QPoint pos);
+      void selectOnPlotTab();
       void addDrillPersistent(const int &);
       void deleteDrillPersistent(const int &);
       void remakePers();
@@ -49,6 +53,7 @@ class ProfileChooser : public QWidget
       Handler * _handler;
       ViewHandler * _viewHandler;
       ProfileHandler * _profileHandler;
+      PlotHandler * _plotHandler;
       QLabel * _label;
       QTableView * _table;
 };

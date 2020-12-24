@@ -90,18 +90,18 @@ CondLeftWidget::CondLeftWidget(ModelNodeBase * model, CondHandler * condHandler,
    gridCheckLayout->addWidget(usbrCheck,4,2,1,1);
 
    _buttonGroup = new QButtonGroup;
-   _buttonGroup->addButton(uniCheck, 2);
-   _buttonGroup->addButton(porCheck, 3);
-   _buttonGroup->addButton(hazCheck, 4);
-   _buttonGroup->addButton(sliCheck, 5);
-   _buttonGroup->addButton(terCheck, 6);
-   _buttonGroup->addButton(bejCheck, 7);
-   _buttonGroup->addButton(zauCheck, 8);
-   _buttonGroup->addButton(kriCheck, 9);
-   _buttonGroup->addButton(kozCheck, 10);
-   _buttonGroup->addButton(cunCheck, 11);
-   _buttonGroup->addButton(zamCheck, 12);
-   _buttonGroup->addButton(usbrCheck, 13);
+   _buttonGroup->addButton(uniCheck, 3);
+   _buttonGroup->addButton(porCheck, 4);
+   _buttonGroup->addButton(hazCheck, 5);
+   _buttonGroup->addButton(sliCheck, 6);
+   _buttonGroup->addButton(terCheck, 7);
+   _buttonGroup->addButton(bejCheck, 8);
+   _buttonGroup->addButton(zauCheck, 9);
+   _buttonGroup->addButton(kriCheck, 10);
+   _buttonGroup->addButton(kozCheck, 11);
+   _buttonGroup->addButton(cunCheck, 12);
+   _buttonGroup->addButton(zamCheck, 13);
+   _buttonGroup->addButton(usbrCheck, 14);
    _buttonGroup->setExclusive(false);
 
    group->setLayout(gridCheckLayout);
@@ -209,11 +209,7 @@ void CondLeftWidget::showDepth(const QItemSelection & sel,
 
    //_depthTable->clearSelection();
    _depthTable->show();
-  /* if(_plotHandler->rowCount(index0)>0)
-      _depthTable->setCurrentIndex(_plotHandler->index(_plotHandler->rowCount(index0)-1, 0, index0)); //seting current to last element
-   else
-      _coorTable->hide();
-      */
+
    _dlabel->setText(" Samples of the drill "+_condHandler->name(index0));
    _dlabel->show();
 }
@@ -239,7 +235,7 @@ void CondLeftWidget::buttonReleasedSlot(int id)
 
 void CondLeftWidget::loadCondSlot()
 {
-   for(size_t id=2;id<14;id++)
+   for(size_t id=3;id<15;id++)
    {
       _buttonGroup->button(id)->setChecked(_condHandler->condCheck(id));
       _condTable->showHideCol(id, _buttonGroup->button(id)->isChecked());

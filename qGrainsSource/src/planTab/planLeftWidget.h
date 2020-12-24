@@ -26,6 +26,7 @@
 
 class QGrains;
 class Handler;
+class PlotHandler;
 class PlanChooser;
 class IsolinesWidget;
 
@@ -33,7 +34,7 @@ class PlanLeftWidget : public QWidget
 {
    Q_OBJECT
    public:
-      PlanLeftWidget(QGrains * qGrains, Handler *);
+      PlanLeftWidget(QGrains * qGrains, Handler *, PlotHandler *);
       PlanChooser * planChooser(){return _planChooser;}
       IsolinesWidget * isolinesWidget(){return _isolinesWidget;}
    private:

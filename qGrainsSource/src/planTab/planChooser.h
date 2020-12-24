@@ -28,14 +28,17 @@ class QComboBox;
 class QLineEdit;
 class QHBoxLayout;
 class Handler;
+class PlotHandler;
 class QGrains;
 
 class PlanChooser : public QWidget
 {
    Q_OBJECT
    public: 
-      PlanChooser(QGrains *, Handler *);
+      PlanChooser(QGrains *, Handler *, PlotHandler *);
    private slots:
+      void contextMenuRequest(QPoint pos);
+      void selectOnPlotTab();
       void indexChangedBySlot(int index);
       void indexChangedValSlot(int index);
       void setPlanFrom();
@@ -62,6 +65,7 @@ class PlanChooser : public QWidget
       QHBoxLayout * _hByLayout;
       QHBoxLayout * _hValLayout;
       Handler * _handler;
+      PlotHandler * _plotHandler;
 };
 
 #endif

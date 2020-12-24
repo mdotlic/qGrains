@@ -105,7 +105,7 @@ void DepthDPicture::contextMenuRequest(QPoint pos)
    menu->setAttribute(Qt::WA_DeleteOnClose);
    menu->addAction("Set range", this, SLOT(setRange()));
    menu->addAction("Save image", this, SLOT(saveImage()));
-   if(_isDepthPlot)
+   if(!_handler->useDElev())
       menu->addAction("Change y axis to elevation", this,
             SLOT(changeIsDepth()));
    else
@@ -178,19 +178,7 @@ void DepthDPicture::saveImage()
 
 void DepthDPicture::changeIsDepth()
 {
-   _isDepthPlot = !_isDepthPlot;
-   if(_isDepthPlot)
-   {
-      this->yAxis->setLabel("depth [m]");
-      this->yAxis->setRangeReversed(true);
-      this->yAxis2->setRangeReversed(true);
-   }
-   else
-   {
-      this->yAxis->setLabel("elevation [m.a.s.l.]");
-      this->yAxis->setRangeReversed(false);
-      this->yAxis2->setRangeReversed(false);
-   }
+   _handler->setUseDElev(!_handler->useDElev());
    allPlotSlot();
 }
 
@@ -257,7 +245,7 @@ void DepthDPicture::setDataForGraph(const int & idrill, const int & id)
       for(int j=0; j<nSamples;j++)
       {
          double val1, val2;
-         if(_isDepthPlot)
+         if(_handler->useDElev())
          {
             val1 = _viewHandler->sampleVal(idrill, j, 0);
             val2 = _viewHandler->sampleVal(idrill, j, 1);
@@ -429,6 +417,18 @@ void DepthDPicture::drillTickSlot(const int & idrill)
 
 void DepthDPicture::allPlotSlot()
 {
+   if(!_handler->useDElev())
+   {
+      this->yAxis->setLabel("depth [m]");
+      this->yAxis->setRangeReversed(true);
+      this->yAxis2->setRangeReversed(true);
+   }
+   else
+   {
+      this->yAxis->setLabel("elevation [m.a.s.l.]");
+      this->yAxis->setRangeReversed(false);
+      this->yAxis2->setRangeReversed(false);
+   }
    for(int idrill=0; idrill<_viewHandler->nDrills(); idrill++)
    {
       if(_viewHandler->isCheckedDrill(idrill))

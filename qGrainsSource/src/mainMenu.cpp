@@ -39,6 +39,7 @@
 #include "model/handlers/dHandler.h"
 #include "model/handlers/sizeHandler.h"
 #include "model/handlers/handler.h"
+#include <iostream>
 #include <QDebug>
 #include <QFileDialog>
 #include <QStatusBar>
@@ -124,12 +125,36 @@ void MainMenu::loadModel(const QString & fileN, const bool & onlyDrills)
             if(str.find("Checked")!=std::string::npos)
             {
                nodeId = ModelEnums::Root::DCHECKED;
+               std::string str;
+               getline(in, str);
+               if(str.find(',') != std::string::npos)
+               {//used from version 1.35, older qgra would just ignore this
+                  std::string s= str.substr(str.find(',')+1);
+                  _qGrains->centralWindow()->handler()->setUseDElev(std::stoi(s));                  
+               }
+               continue;
             }else if(str.find("Checks") != std::string::npos)
             {
-               nodeId = ModelEnums::Root::CHECKS;
+               nodeId = ModelEnums::Root::CHECKS; 
+               continue; 
+               if(in.peek() == ',')
+               {//used from version 1.35, older qgra would just ignore this
+                  std::string name;
+                  getline(in, name, ',');
+                  in>>s;
+                  _qGrains->centralWindow()->handler()->setUsePlotElev(s);                  
+               }
             }else if(str.find("Size") !=std::string::npos)
             {
                nodeId = ModelEnums::Root::PERCCHECK;
+               std::string str;
+               getline(in, str);
+               if(str.find(',') != std::string::npos)
+               {//used from version 1.35, older qgra would just ignore this
+                  std::string s= str.substr(str.find(','));
+                  _qGrains->centralWindow()->handler()->setUsePercElev(std::stoi(s));               
+               }
+               continue;
             }else if(str.find("CondProp")!=std::string::npos)
             {
                char *cstr = new char[str.length() + 1];
@@ -232,7 +257,7 @@ void MainMenu::loadModel(const QString & fileN, const bool & onlyDrills)
          {
             std::vector<int> vec(7);
             std::string name;
-            getline(in, name, ','); 
+            getline(in, name, ',');
             in>>vec[0]>>s>>vec[1]>>s>>vec[2]>>s>>vec[3]>>s>>vec[4]>>s>>
                vec[5]>>s>>vec[6];
 

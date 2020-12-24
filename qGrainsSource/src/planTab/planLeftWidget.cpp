@@ -25,10 +25,11 @@
 
 #include <QVBoxLayout>
 
-PlanLeftWidget::PlanLeftWidget(QGrains * qGrains, Handler * handler)
+PlanLeftWidget::PlanLeftWidget(QGrains * qGrains, Handler * handler, 
+      PlotHandler * plotHandler)
 {
    QVBoxLayout * layout = new QVBoxLayout;
-   _planChooser = new PlanChooser(qGrains, handler);
+   _planChooser = new PlanChooser(qGrains, handler, plotHandler);
    layout->addWidget(_planChooser);
    _isolinesWidget = new IsolinesWidget(qGrains, handler);
    layout->addWidget(_isolinesWidget);

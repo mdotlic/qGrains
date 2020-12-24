@@ -25,16 +25,16 @@
 #include "plotTab/plotLeftWidget.h"
 #include "plotTab/plotPicture.h"
 
-PlotTab::PlotTab(InputHandler * inputHandler, QGrains * qGrains):QSplitter(Qt::Horizontal)
+PlotTab::PlotTab(InputHandler * inputHandler, PlotHandler * plotHandler, QGrains * qGrains):QSplitter(Qt::Horizontal)
 {
-   PlotLeftWidget * plotLeftWidget = new PlotLeftWidget(inputHandler, 
-         qGrains->model());
+   PlotLeftWidget * plotLeftWidget = new PlotLeftWidget(inputHandler,
+         plotHandler, qGrains->model());
    QSizePolicy spLeft(QSizePolicy::Preferred, QSizePolicy::Preferred);
    spLeft.setHorizontalStretch(1);
    plotLeftWidget->setSizePolicy(spLeft);
    //plotLeftWidget->setFixedWidth(200);
    PlotPicture * plotPicture = new PlotPicture(qGrains, 
-         plotLeftWidget->plotHandler(), inputHandler);
+         plotHandler, inputHandler);
    QSizePolicy spRight(QSizePolicy::Preferred, QSizePolicy::Preferred);
    spRight.setHorizontalStretch(3);
    plotPicture->setSizePolicy(spRight);

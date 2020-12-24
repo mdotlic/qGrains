@@ -66,6 +66,8 @@ class PlotHandler : public QAbstractItemModel
       void deleteSample(const int &, const int &);
       void allDrillsChanged(const int &);
       void selectInInterval(const double & from, const double & to);
+      void showAllSamples(const int & drill);
+      void showSample(const int &, const int &);
    private:
       ModelNodeBase * _model;
 

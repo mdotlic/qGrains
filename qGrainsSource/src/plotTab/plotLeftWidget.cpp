@@ -31,6 +31,7 @@
 #include "model/tables/myTableView.h"
 #include "widgets/comboBoxDelegate.h"
 #include <QLabel>
+#include <QMenu>
 #include <QModelIndex>
 #include <QTableView>
 #include <QHeaderView>
@@ -42,13 +43,10 @@
 //#include <QItemSelection>
 
 PlotLeftWidget::PlotLeftWidget(InputHandler * inputHandler, 
-      ModelNodeBase * model):_inputHandler(inputHandler)
+      PlotHandler * plotHandler, ModelNodeBase * model):_inputHandler(inputHandler), _plotHandler(plotHandler)
 {
    _dHeaderNames = new DepthHeaderLineColorNames();
    _cHeaderNames = new CoorHeaderNames();
-
-
-   _plotHandler = new PlotHandler(model);
 
    QVBoxLayout * layout = new QVBoxLayout;
    _namesTable = new MyTableView;//(_plotHandler);
@@ -144,10 +142,36 @@ PlotLeftWidget::PlotLeftWidget(InputHandler * inputHandler,
 
    connect(selButton, SIGNAL(clicked()), this, SLOT(intervalSelect()));
 
+   setContextMenuPolicy(Qt::CustomContextMenu);
+   connect(this, SIGNAL(customContextMenuRequested(QPoint)), 
+            this, SLOT(contextMenuRequest(QPoint)));
    /*  connect(_namesTable, SIGNAL(selChange(const QModelIndex &)), this,
        SLOT(showDepth(const QModelIndex &)));
        connect(_depthTable, SIGNAL(selChange(const QModelIndex &)), this, 
        SLOT(showCoor(const QModelIndex &)));*/
+}
+
+void PlotLeftWidget::contextMenuRequest(QPoint pos)
+{
+   QMenu *menu = new QMenu(this);
+   menu->setAttribute(Qt::WA_DeleteOnClose);
+   if(_inputHandler->usePlotElev())
+      menu->addAction("Set samples as depth", this, SLOT(callUsePlotElev()));
+   else
+      menu->addAction("Set samples as elev", this, SLOT(callUsePlotElev()));
+   menu->popup(mapToGlobal(pos));
+}
+
+void PlotLeftWidget::callUsePlotElev()
+{
+   _inputHandler->setUsePlotElev(!_inputHandler->usePlotElev());
+   QString text = _dlabel->text();
+   if(_inputHandler->usePlotElev())
+      text.replace("Samples (as depth)", "Samples (as elev)");
+   else
+      text.replace("Samples (as elev)", "Samples (as depth)");
+   _dlabel->setText(text);
+   _depthTable->viewport()->update();
 }
 
 void PlotLeftWidget::showDepth(const QItemSelection & sel, 
@@ -182,7 +206,10 @@ void PlotLeftWidget::showDepth(const QItemSelection & sel,
       else
       _coorTable->hide();
     */
-   _dlabel->setText(" Samples of the drill "+_plotHandler->name(index0));
+   if(_inputHandler->usePlotElev())
+      _dlabel->setText(" Samples (as elev) of the drill"+_plotHandler->name(index0)); 
+   else
+      _dlabel->setText(" Samples (as depth) of the drill"+_plotHandler->name(index0));
    _dlabel->show();
 }
 

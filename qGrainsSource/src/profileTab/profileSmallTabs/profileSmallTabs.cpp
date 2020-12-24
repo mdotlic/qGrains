@@ -24,11 +24,11 @@
 #include "surfaceChooser.h"
 
 ProfileSmallTabs::ProfileSmallTabs(ModelNodeBase * model, Handler * handler,
-      ViewHandler * viewHandler, SurfHandler * surfHandler, ProfileHandler * profileHandler)
+      ViewHandler * viewHandler, SurfHandler * surfHandler, ProfileHandler * profileHandler, PlotHandler * plotHandler)
 {
    setTabPosition(QTabWidget::West);
    ProfileChooser * profileChooser  = new ProfileChooser(model, handler, 
-         viewHandler, profileHandler);
+         viewHandler, profileHandler, plotHandler);
    profileChooser->setFocusPolicy(Qt::ClickFocus);
    QString profileChooserString = QString("Drills");
    

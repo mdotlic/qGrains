@@ -54,7 +54,6 @@ class PercPicture : public QCustomPlot
       //void loadDSlot();
 //      void setGraphStyle(const int &, const int &);   
    private:
-      bool _isDepthPlot = true;
       bool _isLegend = true;
       ViewHandler * _viewHandler;
       SizeHandler * _sizeHandler;

@@ -38,6 +38,7 @@
 #include <QFileDialog>
 #include <QStandardItemModel>
 #include <QPlainTextEdit>
+#include <QPainterPathStroker>
 #include <math.h>
 
 PlotPicture::PlotPicture(QGrains * qGrains, PlotHandler * plotHandler, 

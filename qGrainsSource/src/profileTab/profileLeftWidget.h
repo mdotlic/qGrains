@@ -29,6 +29,7 @@ class Handler;
 class ViewHandler;
 class SurfHandler;
 class ProfileHandler;
+class PlotHandler;
 class QComboBox;
 class QHBoxLayout;
 class QLineEdit;
@@ -38,7 +39,7 @@ class ProfileLeftWidget : public QSplitter
    Q_OBJECT
    public:
       ProfileLeftWidget(QGrains * qGrains, Handler *, ViewHandler *,
-            SurfHandler *, ProfileHandler *);
+            SurfHandler *, ProfileHandler *, PlotHandler *);
    private slots:
       void indexChangedSlot(int index);
       void setProfileFrom();

@@ -311,6 +311,21 @@ void Handler::setCond(const int &id, const bool & check)
    _model->child(ModelEnums::Root::CONDUCTIVITY)->setProperty(check, id);
 }
 
+void Handler::setUsePlotElev(const bool & check)
+{
+   _model->child(ModelEnums::Root::CHECKS)->setProperty(check, 0);
+}
+
+void Handler::setUseDElev(const bool & check)
+{
+   _model->child(ModelEnums::Root::DCHECKED)->setProperty(check, 0);
+}
+
+void Handler::setUsePercElev(const bool & check)
+{
+   _model->child(ModelEnums::Root::PERCCHECK)->setProperty(check, 0);
+}
+
 int Handler::nDrills()
 {
    return _model->child(ModelEnums::Root::CHECKS)->rowCount();
@@ -365,6 +380,16 @@ double Handler::terc()
 double Handler::zunk()
 {
    return _model->child(ModelEnums::Root::DRILLS)->properties()[ModelEnums::Drills::CUNK].toDouble();
+}
+
+bool Handler::useDElev()
+{
+   return _model->child(ModelEnums::Root::DCHECKED)->properties()[0].toBool();
+}
+
+bool Handler::usePercElev()
+{
+   return _model->child(ModelEnums::Root::PERCCHECK)->properties()[0].toBool();
 }
 
 int Handler::nPoints(const int & idrill, const int & isample)

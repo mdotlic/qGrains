@@ -33,7 +33,7 @@
 #include <QLabel>
 #include <QLineEdit>
 
-ProfileLeftWidget::ProfileLeftWidget(QGrains * qGrains, Handler * handler, ViewHandler * viewHandler, SurfHandler * surfHandler, ProfileHandler * profileHandler):QSplitter(Qt::Vertical), _handler(handler), _viewHandler(viewHandler)
+ProfileLeftWidget::ProfileLeftWidget(QGrains * qGrains, Handler * handler, ViewHandler * viewHandler, SurfHandler * surfHandler, ProfileHandler * profileHandler, PlotHandler * plotHandler):QSplitter(Qt::Vertical), _handler(handler), _viewHandler(viewHandler)
 {
    QFrame * frame = new QFrame;
    QVBoxLayout * layout = new QVBoxLayout;
@@ -64,7 +64,7 @@ ProfileLeftWidget::ProfileLeftWidget(QGrains * qGrains, Handler * handler, ViewH
    layout->addLayout(_hlayout);
 
    ProfileSmallTabs * profileSmallTabs = new ProfileSmallTabs(qGrains->model(),
-         handler, viewHandler, surfHandler, profileHandler);
+         handler, viewHandler, surfHandler, profileHandler, plotHandler);
 //   ProfileChooser * profileChooser = new ProfileChooser(qGrains->model(),
   //       viewHandler);
    ProfileMap * map = new ProfileMap(handler, viewHandler, profileHandler,
