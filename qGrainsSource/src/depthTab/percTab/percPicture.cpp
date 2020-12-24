@@ -236,11 +236,11 @@ void PercPicture::setDataForGraph(const int & idrill, const int & id)
          double val1, val2;
          if(_handler->usePercElev())
          {
-            val1 = _viewHandler->sampleVal(idrill, j, 0);
-            val2 = _viewHandler->sampleVal(idrill, j, 1);
-         }else{
             val1 = _handler->elev(idrill)-_viewHandler->sampleVal(idrill, j, 0);
             val2 = _handler->elev(idrill)-_viewHandler->sampleVal(idrill, j, 1);
+         }else{
+            val1 = _viewHandler->sampleVal(idrill, j, 0);
+            val2 = _viewHandler->sampleVal(idrill, j, 1);
          }
          
          int nPoints = _handler->nPoints(idrill, j);
@@ -458,7 +458,7 @@ void PercPicture::drillTickPercSlot(const int & idrill)
 
 void PercPicture::allPlotSlot()
 {
-   if(!_handler->useDElev())
+   if(!_handler->usePercElev())
    {
       this->yAxis->setLabel("depth [m]");
       this->yAxis->setRangeReversed(true);
