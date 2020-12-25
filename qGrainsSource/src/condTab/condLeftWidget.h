@@ -44,6 +44,7 @@ class CondLeftWidget : public QWidget
    private slots:
       void showDepth(const QItemSelection & sel, const QItemSelection & desel);
       void intervalSelect();
+      void intervalElevSelect();
       void buttonReleasedSlot(int);
       void loadCondSlot();
    private:

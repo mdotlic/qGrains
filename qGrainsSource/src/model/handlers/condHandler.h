@@ -67,6 +67,7 @@ class CondHandler : public QAbstractItemModel
       void deleteDrill(const int &);
       void allDrillsChanged(const int &);
       void selectInInterval(const double & from, const double & to);
+      void selectInElevInterval(const double & from, const double & to);
    private:
       ModelNodeBase * _model;
 

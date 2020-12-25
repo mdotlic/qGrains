@@ -291,6 +291,29 @@ void CondHandler::selectInInterval(const double & from, const double & to)
    }
 }
 
+void CondHandler::selectInElevInterval(const double & from, const double & to)
+{
+   int ndrills = _model->child(ModelEnums::Root::CHECKS)->rowCount();
+   for(int i=0;i<ndrills;i++)
+   {
+      int limit = _model->child(ModelEnums::Root::CHECKS)->child(i)->rowCount();
+      double elev = _model->child(ModelEnums::Root::DRILLS)->child(i)->properties()[ModelEnums::DrillProp::Elevation].toDouble();
+      for(int j=0;j<limit;j++)
+      {
+         if(to >= elev - _model->child(ModelEnums::Root::DRILLS)->child(i)->child(j)->properties()[0].toDouble() 
+               &&
+               from<= elev - _model->child(ModelEnums::Root::DRILLS)->child(i)->child(j)->properties()[1].toDouble())
+         {
+            _model->child(ModelEnums::Root::CHECKS)->child(i)->child(j)->setProperty(true, ModelEnums::SampleProp::SampleCondCheck);
+            emit changeRow(i, j);
+         }
+      }
+      QModelIndex drillsIndex = createIndex(0,0,_model);
+      emit dataChanged(this->index(0, 0, drillsIndex), 
+            this->index(limit, 0, drillsIndex));
+   }
+}
+
 void CondHandler::setCondCheck(const int & id, const bool & check)
 {
    _model->child(ModelEnums::Root::CONDUCTIVITY)->setProperty(check, id-3);

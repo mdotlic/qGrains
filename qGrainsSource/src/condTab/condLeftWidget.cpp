@@ -132,9 +132,10 @@ CondLeftWidget::CondLeftWidget(ModelNodeBase * model, CondHandler * condHandler,
    _toLineEdit = new QLineEdit; 
    //_toLineEdit->setFixedWidth(50);
    hlayout->addWidget(_toLineEdit);
-   QPushButton * selButton = new QPushButton("Select");
-   hlayout->addWidget(selButton);
-
+   QPushButton * depthButton = new QPushButton("Depth");
+   hlayout->addWidget(depthButton);
+   QPushButton * elevButton = new QPushButton("Elev");
+   hlayout->addWidget(elevButton);
 
    layout->addLayout(hlayout);
 
@@ -157,7 +158,7 @@ CondLeftWidget::CondLeftWidget(ModelNodeBase * model, CondHandler * condHandler,
    
    connect(_fromLineEdit, SIGNAL(returnPressed()), _toLineEdit, 
          SLOT(setFocus()));
-   connect(_toLineEdit, SIGNAL(returnPressed()), selButton, 
+   connect(_toLineEdit, SIGNAL(returnPressed()), depthButton, 
          SLOT(setFocus()));
 
    connect(_namesTable->selectionModel(),
@@ -182,7 +183,9 @@ CondLeftWidget::CondLeftWidget(ModelNodeBase * model, CondHandler * condHandler,
    connect(_condHandler, SIGNAL(deselectedSpline()), 
          this, SLOT(deselectedSplineSlot()));*/
 
-   connect(selButton, SIGNAL(clicked()), this, SLOT(intervalSelect()));
+   connect(depthButton, SIGNAL(clicked()), this, SLOT(intervalSelect()));
+   connect(elevButton, SIGNAL(clicked()), this, SLOT(intervalElevSelect()));
+
 
    connect(_buttonGroup, SIGNAL(buttonReleased(int)), this,
          SLOT(buttonReleasedSlot(int)));
@@ -224,6 +227,19 @@ void CondLeftWidget::intervalSelect()
    {
       _condHandler->allDrillsChanged(0);
       _condHandler->selectInInterval(fromValue, toValue);
+   }
+}
+
+void CondLeftWidget::intervalElevSelect()
+{
+   bool fromOk, toOk;
+
+   double fromValue = _fromLineEdit->text().toDouble(&fromOk);
+   double toValue = _toLineEdit->text().toDouble(&toOk);
+   if(fromOk && toOk)
+   {
+      _condHandler->allDrillsChanged(0);
+      _condHandler->selectInElevInterval(fromValue, toValue);
    }
 }
 
