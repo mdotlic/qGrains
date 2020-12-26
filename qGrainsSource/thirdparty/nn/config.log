@@ -28,6 +28,7 @@ uname -v = #64-Ubuntu SMP Wed Dec 9 08:16:25 UTC 2020
 /bin/universe          = unknown
 
 PATH: /media/Storage/mxe/mxe/usr/bin
+PATH: /media/Storage/mxe/mxe/usr/bin
 PATH: /media/Storage/anaconda3/bin
 PATH: /media/Storage/anaconda3/condabin
 PATH: /usr/local/cuda/bin
